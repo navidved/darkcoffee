@@ -1,5 +1,5 @@
 fastapi[all]
 sqlmodel
-passlib
-jose
-bcrypt
+python-jose[cryptography]
+passlib[bcrypt]
+autopep8

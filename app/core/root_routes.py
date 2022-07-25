@@ -11,10 +11,10 @@ router = APIRouter(
 
 @router.get('/')
 def root():
-    return {"app": settings.app_name}
+    return {"app": settings.AppConfig().APP_NAME}
 
 
 @router.get('/migrate')
 def migrate():
     db.migrate()
-    return {"migrate":"done!"}
+    return {"migrate": "done!"}

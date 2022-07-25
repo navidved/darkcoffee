@@ -12,10 +12,11 @@ class Post(PostBase):
 
 
 class ShowPost(BaseModel):
-    from app.blog.schemas.user_schemas import ShowUser
+    from app.blog.schemes.user_schemes import ShowUser
     id: int
     title: str
-    body:str
+    body: str
     creator_user: ShowUser
+
     class Config():
         orm_mode = True

@@ -6,7 +6,10 @@ if TYPE_CHECKING:
 
 class User(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    name: str
+    full_name: str
+    username: str
     email: str
-    password: str
+    disabled: bool = False
+    hashed_password: str
     posts: List["Post"] = Relationship(back_populates="creator_user")
+

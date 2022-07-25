@@ -1,6 +1,6 @@
 from typing import List
 from fastapi import APIRouter, status
-from app.blog.schemas import post_schemas
+from app.blog.schemes import post_schemes
 from app.blog.controllers import add_post_controller,\
      get_all_posts_controller, show_post_controller,\
      update_post_controller, delete_post_controller
@@ -29,7 +29,7 @@ def show(id: int):
 
 
 @router.put('/{id}', status_code=status.HTTP_202_ACCEPTED)
-def update(id: int, post_data: post_schemas.PostBase):
+def update(id: int, post_data: post_schemes.PostBase):
     return update_post_controller.__invoke(id, post_data)
 
 

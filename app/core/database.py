@@ -2,7 +2,8 @@ from sqlmodel import SQLModel, create_engine, Session
 from app.config import settings
 
 
-engine = create_engine(f"sqlite:///{settings.sqlite_database_path}")
+engine = create_engine(
+    f"sqlite:///{settings.AppConfig().SQLITE_DATABASE_PATH}")
 
 
 def migrate():
@@ -12,4 +13,3 @@ def migrate():
 def get_session():
     with Session(engine) as session:
         yield session
-
