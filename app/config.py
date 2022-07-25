@@ -1,13 +1,14 @@
-import imp
-from pydantic import BaseSettings
-import sqlalchemy
-from os import path, getcwd
+from app.core.setting_defs import SettingDefs
 
 
-class Settings(BaseSettings):
-    app_name: str = "DarkCoffee Blog"
+class Settings(SettingDefs):
+    # customize defult app settings
+    app_name = "DarkCoffee Blog"
+    sqlite_database_name = "blog.db"
+    
+    # define app settings
     email: str = "navidved@gmail.com"
-    sqlite_database_name: str = "blog.db"
-    sqlite_database_path: str = path.join(path.abspath(getcwd()) ,"ds", sqlite_database_name)
+    company: str = "AlphaNeuron"
+    
 
 settings = Settings()

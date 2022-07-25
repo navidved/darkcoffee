@@ -1,20 +1,13 @@
-from app.blog import router as blog_router
 from fastapi import FastAPI
+from app.core import root_router
+from app.blog.routers import post_router, user_router
+
 
 
 class Router:
   def __init__(self, app: FastAPI):
-    self.app = app
-    self.tag = "Main"
-    self.main_routes(self.app)
-    app.include_router(blog_router.router)
+    app.include_router(root_router.router)
+    app.include_router(post_router.router)
+    app.include_router(user_router.router)
     
-
-
-  def main_routes(self, app: FastAPI):
-    
-    @app.get('/', tags=[self.tag])
-    def root():
-        return {"root"}
-
 

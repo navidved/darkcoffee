@@ -1,2 +1,5 @@
 fastapi[all]
 sqlmodel
+passlib
+jose
+bcrypt

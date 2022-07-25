@@ -1,5 +1,5 @@
-from app.blog.repository import post_repo
+from app.blog.repository.post_repo import PostRepo
 
 
 def __invoke(id: int):
-    return post_repo.delete_post(id)
+    return PostRepo().delete_post(id)

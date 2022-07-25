@@ -1,5 +1,5 @@
 # darkcoffee
-a complete back-end structure to develop and deploy services 
+a complete back-end structure for develop and deploy services 
 
 
 # run 

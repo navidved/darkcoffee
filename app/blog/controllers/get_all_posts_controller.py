@@ -1,5 +1,5 @@
-from app.blog.repository import post_repo
+from app.blog.repository.post_repo import PostRepo
 
 
 def __invoke():
-    return post_repo.get_all_posts()
+    return PostRepo().get_all_posts()
