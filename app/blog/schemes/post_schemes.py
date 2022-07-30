@@ -1,22 +1,22 @@
 from pydantic import BaseModel
 
 
-class PostBase(BaseModel):
+class PostBaseSchema(BaseModel):
     title: str
     body: str
 
 
-class Post(PostBase):
+class PostSchema(PostBaseSchema):
     class Config():
         orm_mode = True
 
 
-class ShowPost(BaseModel):
-    from app.blog.schemes.user_schemes import ShowUser
+class ShowPostSchema(BaseModel):
+    # from app.blog.schemes.user_schemes import ShowUserSchema
     id: int
     title: str
     body: str
-    creator_user: ShowUser
+    # creator_user: ShowUserSchema
 
     class Config():
         orm_mode = True

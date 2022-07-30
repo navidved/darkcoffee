@@ -1,6 +1,7 @@
 from sqlmodel import  Session
-from app.core.database import engine
+
+import app.core.database as db
 
 class Repo:
     def __init__(self):
-        self.session = Session(engine)
+        self.session = Session(db.engine)

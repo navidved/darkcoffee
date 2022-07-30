@@ -1,6 +1,7 @@
 from fastapi import FastAPI
-from app.router import Router
+from app.route_table import RouteTable
 
 app = FastAPI()
-Router(app)
+RouteTable()
+
 

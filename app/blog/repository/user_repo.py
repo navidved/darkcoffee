@@ -1,16 +1,16 @@
+from fastapi import HTTPException, status
 from sqlmodel import select
 from app.blog.models.user_model import User
-from app.blog.schemes import user_schemes
-from fastapi import HTTPException, status
-from app.core.hashing import Hash
+from app.blog.schemes.user_schemes import UserSchema
 from app.core.repo import Repo
+from app.core.hashing import get_password_hash
 
 
 class UserRepo(Repo):
 
-    def add_user(self, request: user_schemes.User):
+    def add_user(self, request: UserSchema):
         new_user = User(full_name=request.full_name, username=request.username, email=request.email,
-                        hashed_password=Hash.get_password_hash(request.password))
+                        hashed_password=get_password_hash(request.password))
         self.session.add(new_user)
         self.session.commit()
         self.session.refresh(new_user)

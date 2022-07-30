@@ -1,20 +1,15 @@
 from pydantic import BaseSettings
-from os import path
-from app.core.def_settings import DefSettings
+from app.core.default_settings import DefaultSettings
 
 
-class Settings(BaseSettings):
-    # define app settings
+class Config(BaseSettings):
+    # define custom apps settings
     EMAIL: str = "navidved@gmail.com"
-    COMPANY: str = "AlphaNeuron"
+    MODEL_PATH: str = ""
+    # change default setting
+    APP_SETTING: DefaultSettings = DefaultSettings()
+    APP_SETTING.APP_NAME = "DRKApp"
+    APP_SETTING.SQLITE_DATABASE_NAME = "blog.db"
+    APP_SETTING.rest()
 
-    # customize defult app settings
-    class AppConfig(DefSettings):
-        def __init__(self):
-            super().__init__()
-            self.APP_NAME = "Navid App"
-            self.SQLITE_DATABASE_NAME = "blog.db"
-            self.refresh_db_path()
-
-
-settings = Settings()
+cfg = Config()

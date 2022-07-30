@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING ,List , Optional
+from typing import TYPE_CHECKING, List, Optional
 from sqlmodel import Field, Relationship, SQLModel
 if TYPE_CHECKING:
     from .post_model import Post
@@ -12,4 +12,3 @@ class User(SQLModel, table=True):
     disabled: bool = False
     hashed_password: str
     posts: List["Post"] = Relationship(back_populates="creator_user")
-
