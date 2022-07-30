@@ -7,15 +7,14 @@ from app.core.hashing import verify_password
 from app.core.token import TokenData
 from app.config import cfg
 import app.core.constants as const
-from app.core.user import get_user
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-# get_user = cfg.APP_SETTING.GET_USER_METHOD
+get_user_method = cfg.APP_SETTING.GET_USER_METHOD
 
 
 def authenticate_user(username: str, password: str):
-    user = get_user(username)
+    user = get_user_method(username)
     if not user:
         return False
     if not verify_password(password, user.hashed_password):
@@ -38,7 +37,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         token_data = TokenData(username=username)
     except JWTError:
         raise credentials_exception
-    user = get_user(username=token_data.username)
+    user = get_user_method(username=token_data.username)
     if user is None:
         raise credentials_exception
     return user

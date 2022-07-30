@@ -1,6 +1,4 @@
 from pydantic import BaseModel
-from app.config import cfg
-
 
 class User(BaseModel):
     username: str
@@ -14,7 +12,8 @@ class UserInDB(User):
 
 
 def get_user(username: str) -> UserInDB:
-    db = cfg.APP_SETTING.FAKE_USER_DB
+    import app.config as config
+    db = config.cfg.APP_SETTING.FAKE_USER_DB
     if username in db:
         user_dict = db[username]
         return UserInDB(**user_dict)

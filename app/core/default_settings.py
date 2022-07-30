@@ -1,7 +1,6 @@
 from os import path, getcwd
 
 
-
 class DefaultSettings:
     APP_NAME: str = "Darkcoffee"
 
@@ -17,7 +16,7 @@ class DefaultSettings:
     PASS_HASHING_ALGORITHM: str = "bcrypt"
     JWT_ENCODE_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
-    # GET_USER_METHOD = get_user
+    GET_USER_METHOD: callable = None
     FAKE_USER_DB = {
         "navid": {
             "username": "navid",
@@ -29,6 +28,17 @@ class DefaultSettings:
         }
     }
 
-    def rest(self) -> None:
+    def __init__(self) -> None:
+        self.rest_db_path()
+        self.set_user_method()
+        
+
+    def rest_db_path(self) -> None:
         self.SQLITE_DATABASE_PATH = path.join(
             self.SQLITE_DATABASE_DIR_PATH, self.SQLITE_DATABASE_NAME)
+
+    def set_user_method(self) -> None:
+        from app.core.user import get_user
+        self.GET_USER_METHOD = get_user
+
+

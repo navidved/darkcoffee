@@ -1,8 +1,6 @@
 from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-
-from app.core.database import migrate as migrate_db
 from app.core.token import Token, create_access_token
 from app.core.authentication import authenticate_user
 from app.config import cfg
@@ -22,7 +20,8 @@ def root():
 
 @router.get('/migrate')
 def migrate():
-    migrate_db()
+    from app.core.database import Database
+    Database.migrate()
     return {"database": "migrated"}
 
 
