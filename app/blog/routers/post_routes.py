@@ -15,7 +15,7 @@ from app.core.authentication import authenticate_user, get_current_active_user
 
 router = APIRouter(
     prefix="/blog/post",
-    tags=['Post']
+    tags=['Post'],
 )
 
 

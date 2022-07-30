@@ -5,7 +5,6 @@ from app.blog.schemes.user_schemes import UserSchema
 from app.core.repo import Repo
 
 
-
 class UserRepo(Repo):
 
     def add_user(self, request: UserSchema):
