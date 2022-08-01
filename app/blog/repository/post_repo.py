@@ -1,32 +1,32 @@
 from fastapi import HTTPException
 from sqlmodel import select
 from app.core.repo import Repo
-from app.blog.models.post_model import Post
+from app.blog.models.post_model import PostModel
 from app.blog.schemes.post_schemes import PostBaseSchema
 
 
 
 class PostRepo(Repo):
 
-    def get_all_posts(self) -> list[Post]:
-        statement = select(Post)
+    def get_all_posts(self) -> list[PostModel]:
+        statement = select(PostModel)
         posts = self.session.exec(statement).all()
         return posts
 
-    def add_post(self, post: Post) -> Post:
+    def add_post(self, post: PostModel) -> PostModel:
         post.creator_user = 1
         self.session.add(post)
         self.session.commit()
         self.session.refresh(post)
         return post
 
-    def show_post(self, id: int) -> Post:
-        statement = select(Post).where(Post.id == id)
+    def show_post(self, id: int) -> PostModel:
+        statement = select(PostModel).where(PostModel.id == id)
         post = self.session.exec(statement).first()
         return post
 
-    def update_post(self, id: int, post_data: PostBaseSchema) -> Post:
-        statement = select(Post).where(Post.id == id)
+    def update_post(self, id: int, post_data: PostBaseSchema) -> PostModel:
+        statement = select(PostModel).where(PostModel.id == id)
         results = self.session.exec(statement)
         current_post = results.first()
 
@@ -39,7 +39,7 @@ class PostRepo(Repo):
         return current_post
 
     def delete_post(self, id: int) -> bool:
-        post = self.session.get(Post, id)
+        post = self.session.get(PostModel, id)
         if not post:
             raise HTTPException(status_code=404, detail="Post not found")
         self.session.delete(post)

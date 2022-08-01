@@ -1,5 +1,6 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
+
 
 
 class UserSchema(BaseModel):
@@ -10,12 +11,15 @@ class UserSchema(BaseModel):
 
 
 class ShowUserSchema(BaseModel):
-    # from app.blog.schemes.post_schemes import PostSchema
     full_name: str
     username: str
     email: str
     disabled: bool
-    # posts: List[PostSchema] = []
+    posts: Optional[List["PostSchema"]] = []
 
     class Config():
         orm_mode = True
+
+
+from app.blog.schemes.post_schemes import PostSchema
+ShowUserSchema.update_forward_refs()

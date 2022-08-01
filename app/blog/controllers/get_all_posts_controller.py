@@ -1,6 +1,6 @@
 from app.blog.repository.post_repo import PostRepo
-from app.blog.models.post_model import Post
+from app.blog.models.post_model import PostModel
 
 
-def invoke() -> list[Post]:
+def invoke() -> list[PostModel]:
     return PostRepo().get_all_posts()
