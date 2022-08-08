@@ -1,4 +1,4 @@
-from sqlmodel import  Session
+from sqlmodel import Session
 from app.core.database import Database
 
 class Repo:

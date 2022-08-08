@@ -5,7 +5,7 @@ class DefaultSettings:
     APP_NAME: str = "Darkcoffee"
 
     # Database
-    SQLITE_DATABASE_NAME: str = "sqlite.db"
+    SQLITE_DATABASE_NAME: str = "sqlite.sqlite"
     SQLITE_DATABASE_DIR_PATH: str = path.join(
         path.abspath(getcwd()), "ds")
     SQLITE_DATABASE_PATH: str = ""

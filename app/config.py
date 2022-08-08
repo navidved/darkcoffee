@@ -9,7 +9,7 @@ class Config(BaseSettings):
     # change default setting
     APP_SETTING: DefaultSettings = DefaultSettings()
     APP_SETTING.APP_NAME = "DRKApp"
-    APP_SETTING.SQLITE_DATABASE_NAME = "blog.db"
+    APP_SETTING.SQLITE_DATABASE_NAME = "blog.sqlite"
     APP_SETTING.rest_db_path()
 
 

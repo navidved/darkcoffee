@@ -21,7 +21,7 @@ def root():
 @router.get('/migrate')
 def migrate():
     from app.core.database import Database
-    Database.migrate()
+    Database().migrate()
     return {"database": "migrated"}
 
 

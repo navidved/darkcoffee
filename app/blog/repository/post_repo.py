@@ -20,7 +20,7 @@ class PostRepo(Repo):
         self.session.refresh(post)
         return post
 
-    def show_post(self, id: int) -> PostModel:
+    def get_post(self, id: int) -> PostModel:
         statement = select(PostModel).where(PostModel.id == id)
         post = self.session.exec(statement).first()
         return post

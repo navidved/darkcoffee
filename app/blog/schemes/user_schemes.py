@@ -1,7 +1,7 @@
 from typing import List, Optional
 from pydantic import BaseModel
 
-
+    
 
 class UserSchema(BaseModel):
     full_name: str
@@ -11,6 +11,7 @@ class UserSchema(BaseModel):
 
 
 class ShowUserSchema(BaseModel):
+    id: int
     full_name: str
     username: str
     email: str
