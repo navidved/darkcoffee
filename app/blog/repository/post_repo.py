@@ -1,47 +1,53 @@
-from fastapi import HTTPException
 from sqlmodel import select
 from app.core.repo import Repo
-from app.blog.models.post_model import PostModel
-from app.blog.schemes.post_schemes import PostBaseSchema
+from app.blog.models.post_model import PostCreate, PostModel, PostRead, PostUpdate
+from app.core.user import User
 
 
 
 class PostRepo(Repo):
+    def add_post(
+        self,
+        post: PostCreate,
+        current_user: User
+    ) -> PostRead:
+        db_post = PostModel.from_orm(post)
+        db_post.author_id = current_user.id
+        self.session.add(db_post)
+        self.session.commit()
+        self.session.refresh(db_post)
+        return db_post
 
-    def get_all_posts(self) -> list[PostModel]:
-        statement = select(PostModel)
+
+    def get_all_posts(self, offset: int, limit: int) -> list[PostRead]:
+        statement = select(PostModel).offset(offset).limit(limit)
         posts = self.session.exec(statement).all()
         return posts
 
-    def add_post(self, post: PostModel) -> PostModel:
-        post.creator_user = 1
-        self.session.add(post)
+
+    def get_post(self, id: int) -> PostRead:
+        return self.session.get(PostModel, id)
+
+
+    def update_post(self, id: int, post: PostUpdate) -> PostRead:
+        db_post = self.session.get(PostModel, id)
+        if not db_post:
+            return None
+
+        post_data = post.dict(exclude_unset=True)
+        for key, value in post_data.items():
+            setattr(db_post, key, value)
+
+        self.session.add(db_post)
         self.session.commit()
-        self.session.refresh(post)
-        return post
+        self.session.refresh(db_post)
+        return db_post
 
-    def get_post(self, id: int) -> PostModel:
-        statement = select(PostModel).where(PostModel.id == id)
-        post = self.session.exec(statement).first()
-        return post
-
-    def update_post(self, id: int, post_data: PostBaseSchema) -> PostModel:
-        statement = select(PostModel).where(PostModel.id == id)
-        results = self.session.exec(statement)
-        current_post = results.first()
-
-        current_post.title = post_data.title
-        current_post.body = post_data.body
-
-        self.session.add(current_post)
-        self.session.commit()
-        self.session.refresh(current_post)
-        return current_post
 
     def delete_post(self, id: int) -> bool:
         post = self.session.get(PostModel, id)
         if not post:
-            raise HTTPException(status_code=404, detail="Post not found")
+            return False
         self.session.delete(post)
         self.session.commit()
         return True

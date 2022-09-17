@@ -7,13 +7,13 @@ if TYPE_CHECKING:
 class PostBase(SQLModel):
     title: str
     body: str
-    user_id: Optional[int] = Field(default=None, foreign_key="user.id")
 
 
 class PostModel(PostBase, table=True):
     __tablename__ = "post"
     id: Optional[int] = Field(default=None, primary_key=True)
-    creator_user: Optional["UserModel"] = Relationship(back_populates="posts")
+    author: Optional["UserModel"] = Relationship(back_populates="posts")
+    author_id: Optional[int] = Field(default=None, foreign_key="user.id")
 
 
 class PostCreate(PostBase):
@@ -22,9 +22,9 @@ class PostCreate(PostBase):
 
 class PostRead(PostBase):
     id: int
+    author: Optional["UserModel"] = Relationship(back_populates="posts")
 
 
 class PostUpdate(PostBase):
     title: Optional[str] = None
     body: Optional[str] = None
-    user_id: Optional[int] = None

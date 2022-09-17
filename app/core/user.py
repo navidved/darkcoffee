@@ -1,7 +1,10 @@
+from sqlmodel import Field
+from typing import Optional
 from pydantic import BaseModel
 
 
 class User(BaseModel):
+    id: Optional[int] = Field(default=None, primary_key=True)
     username: str
     email: str | None = None
     full_name: str | None = None

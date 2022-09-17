@@ -1,6 +1,8 @@
+from os import path
 from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.responses import FileResponse
 from app.core.token import Token, create_access_token
 from app.core.authentication import authenticate_user
 from app.config import cfg
@@ -23,6 +25,11 @@ def migrate():
     from app.core.database import Database
     Database().migrate()
     return {"database": "migrated"}
+
+
+@router.get('/favicon.ico')
+async def favicon():
+    return FileResponse(cfg.APP_SETTING.FAVICON_PATH)
 
 
 @router.post("/token", response_model=Token)

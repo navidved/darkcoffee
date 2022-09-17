@@ -3,6 +3,7 @@ from os import path, getcwd
 
 class DefaultSettings:
     APP_NAME: str = "Darkcoffee"
+    FAVICON_PATH: str = path.join("app","static","favicon.ico")
 
     # Database
     SQLITE_DATABASE_NAME: str = "sqlite.sqlite"
@@ -27,6 +28,7 @@ class DefaultSettings:
             "disabled": False,
         }
     }
+
 
     def __init__(self) -> None:
         self.rest_db_path()

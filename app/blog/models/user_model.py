@@ -5,21 +5,21 @@ if TYPE_CHECKING:
 
 
 class UserBase(SQLModel):
+    username: str = Field(index=True)
+    email: str = Field(index=True)
     full_name: str
-    username: str
-    email: str
     disabled: bool = False
 
 
 class UserModel(UserBase, table=True):
     __tablename__ = "user"
     id: Optional[int] = Field(default=None, primary_key=True)
-    hashed_password: str
-    posts: List["PostModel"] = Relationship(back_populates="creator_user")
+    hashed_password: Optional[str]
+    posts: List["PostModel"] = Relationship(back_populates="author")
 
 
 class UserCreate(UserBase):
-    hashed_password: str
+    password: str
 
 
 class UserRead(UserBase):
@@ -28,7 +28,6 @@ class UserRead(UserBase):
 
 class UserUpdate(UserBase):
     full_name: Optional[str] = None
-    username: Optional[str] = None
     email: Optional[str] = None
     disabled: Optional[bool] = None
 

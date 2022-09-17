@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 class HeroBase(SQLModel):
     name: str = Field(index=True)
     secret_name: str
-    age: Optional[int] = Field(default=None, index=True)
+    age: Optional[int]
     team_id: Optional[int] = Field(default=None, foreign_key="team.id")
 
 
@@ -30,3 +30,8 @@ class HeroUpdate(SQLModel):
     secret_name: Optional[str] = None
     age: Optional[int] = None
     team_id: Optional[int] = None
+
+
+class HeroReadWithTeam(HeroRead):
+    from app.blog.models.team_model import TeamRead
+    team: Optional[TeamRead] = None

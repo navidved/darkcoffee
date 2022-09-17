@@ -1,29 +1,57 @@
 from typing import List
-from fastapi import APIRouter, status
-from app.blog.models.hero_model import HeroCreate, HeroRead
-from app.blog.controllers import (
-    add_hero_controller,
-    show_hero_controller,
-    get_all_heros_controller
-)
+from fastapi import APIRouter, status, Query
+from app.blog.models.hero_model import HeroCreate, HeroRead, HeroReadWithTeam, HeroUpdate
+from app.blog.controllers import hero_controller
 
 
 router = APIRouter(
-    prefix="/blog/hero",
+    prefix="/blog/heros",
     tags=['Hero'],
 )
 
 
-@router.post('/', status_code=status.HTTP_201_CREATED)
-def add(request: HeroCreate):
-    return add_hero_controller.invoke(request)
+@router.post("/",
+             response_model=HeroReadWithTeam,
+             status_code=status.HTTP_201_CREATED
+             )
+def add(*, hero: HeroCreate):
+    return hero_controller.add_hero(hero)
 
 
-@router.get('/', status_code=status.HTTP_200_OK, response_model=List[HeroRead])
-def all():
-    return get_all_heros_controller.invoke()
+@router.get("/",
+            response_model=List[HeroReadWithTeam],
+            status_code=status.HTTP_200_OK
+            )
+def all(
+    *,
+    offset: int = 0,
+    limit: int = Query(default=10, lte=15),
+):
+    return hero_controller.get_all_heros(offset, limit)
 
 
-@router.get('/{id}', status_code=status.HTTP_200_OK, response_model=HeroRead)
-def show(id: int):
-    return show_hero_controller.invoke(id)
+@router.get("/{id}",
+            response_model=HeroReadWithTeam,
+            status_code=status.HTTP_200_OK
+            )
+def show(*, id: int):
+    return hero_controller.get_hero(id)
+
+
+@router.patch("/{hero_id}",
+              response_model=HeroReadWithTeam,
+              status_code=status.HTTP_200_OK
+              )
+def update(
+    *,
+    id: int,
+    hero: HeroUpdate,
+):
+    return hero_controller.update_hero(id, hero)
+
+
+@router.delete("/{id}",
+               status_code=status.HTTP_200_OK
+               )
+def delete(*, id: int):
+    return hero_controller.detete_hero(id)
