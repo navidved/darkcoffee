@@ -5,13 +5,12 @@ from app.core.default_settings import DefaultSettings
 class Config(BaseSettings):
     # define custom apps settings
     EMAIL: str = "navidved@gmail.com"
-    MODEL_PATH: str = ""
+    MODEL_NAME: str = "nlp_model"
     
     # change default setting
     APP_SETTING = DefaultSettings()
-    APP_SETTING.APP_NAME = "Drk-App"
-    APP_SETTING.SQLITE_DATABASE_NAME = "blog.sqlite"
-    APP_SETTING.rest_db_path()
+    APP_SETTING.APP_NAME = "DC-App"
+    APP_SETTING.set_db_name("db.sqlite")
 
 
 def set_user_method(cfg: Config):

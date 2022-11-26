@@ -3,7 +3,7 @@ from os import path, getcwd
 
 class DefaultSettings:
     APP_NAME: str = "Darkcoffee"
-    FAVICON_PATH: str = path.join("app","static","favicon.ico")
+    FAVICON_PATH: str = path.join("app", "static", "favicon.ico")
 
     # Database
     SQLITE_DATABASE_NAME: str = "sqlite.sqlite"
@@ -17,7 +17,7 @@ class DefaultSettings:
     PASS_HASHING_ALGORITHM: str = "bcrypt"
     JWT_ENCODE_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
-    GET_USER_METHOD: callable = None
+    GET_USER_METHOD: str = None
     FAKE_USER_DB = {
         "navid": {
             "username": "navid",
@@ -29,18 +29,15 @@ class DefaultSettings:
         }
     }
 
-
     def __init__(self) -> None:
-        self.rest_db_path()
+        self.set_db_name()
         self.set_user_method()
-        
 
-    def rest_db_path(self) -> None:
+    def set_db_name(self, db_name: str = SQLITE_DATABASE_NAME) -> None:
+        self.SQLITE_DATABASE_NAME = db_name
         self.SQLITE_DATABASE_PATH = path.join(
             self.SQLITE_DATABASE_DIR_PATH, self.SQLITE_DATABASE_NAME)
 
     def set_user_method(self) -> None:
         from app.core.user import get_user
         self.GET_USER_METHOD = get_user
-
-

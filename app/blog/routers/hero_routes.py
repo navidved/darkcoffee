@@ -1,7 +1,9 @@
 from typing import List
 from fastapi import APIRouter, status, Query
-from app.blog.models.hero_model import HeroCreate, HeroRead, HeroReadWithTeam, HeroUpdate
+from app.blog.models.hero_model import HeroCreate, HeroRead, HeroReadWithTeam, HeroUpdate, HeroModel
+from app.blog.models.team_model import TeamModel
 from app.blog.controllers import hero_controller
+
 
 
 router = APIRouter(
@@ -11,15 +13,33 @@ router = APIRouter(
 
 
 @router.post("/",
-             response_model=HeroReadWithTeam,
+             response_model=HeroRead,
              status_code=status.HTTP_201_CREATED
              )
 def add(*, hero: HeroCreate):
     return hero_controller.add_hero(hero)
 
 
+@router.post("/with-team",
+             status_code=status.HTTP_201_CREATED
+             )
+def new_hero():
+    from app.core.database import Database, Session
+    session = Session(Database().engine)
+    with session:
+        barca_team = TeamModel(name="FC Barcelona", headquarters="Catalonia")
+        barca_hero = HeroModel(
+            name="Messi", secret_name="MazMaz", team=barca_team
+        )
+
+        session.add(barca_hero)
+        session.commit()
+        session.refresh(barca_hero)
+    return barca_hero
+
+
 @router.get("/",
-            response_model=List[HeroReadWithTeam],
+            response_model=List[HeroRead],
             status_code=status.HTTP_200_OK
             )
 def all(
@@ -39,7 +59,7 @@ def show(*, id: int):
 
 
 @router.patch("/{hero_id}",
-              response_model=HeroReadWithTeam,
+              response_model=HeroRead,
               status_code=status.HTTP_200_OK
               )
 def update(

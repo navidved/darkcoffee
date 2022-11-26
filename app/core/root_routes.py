@@ -27,7 +27,7 @@ def migrate():
     return {"database": "migrated"}
 
 
-@router.get('/favicon.ico')
+@router.get('/favicon.ico', include_in_schema=False)
 async def favicon():
     return FileResponse(cfg.APP_SETTING.FAVICON_PATH)
 

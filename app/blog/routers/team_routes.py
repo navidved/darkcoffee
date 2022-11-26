@@ -11,7 +11,7 @@ router = APIRouter(
 
 
 @router.post("/",
-             response_model=TeamReadWithHeroes,
+             response_model=TeamRead,
              status_code=status.HTTP_201_CREATED
              )
 def add(*, team: TeamCreate):
@@ -19,7 +19,7 @@ def add(*, team: TeamCreate):
 
 
 @router.get("/",
-            response_model=List[TeamReadWithHeroes],
+            response_model=List[TeamRead],
             status_code=status.HTTP_200_OK
             )
 def all(
@@ -39,7 +39,7 @@ def show(*, id: int):
 
 
 @router.patch("/{team_id}",
-              response_model=TeamReadWithHeroes,
+              response_model=TeamRead,
               status_code=status.HTTP_200_OK
               )
 def update(

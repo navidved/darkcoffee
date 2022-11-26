@@ -19,7 +19,8 @@ class HeroRepo(Repo):
 
 
     def get_hero(self, id: int) -> HeroRead:
-        return self.session.get(HeroModel, id)
+        data = self.session.get(HeroModel, id)
+        return data
 
     
     def update_hero(self, id: int, hero: HeroUpdate) -> HeroRead:
