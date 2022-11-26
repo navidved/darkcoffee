@@ -2,7 +2,7 @@
 a complete back-end structure for develop and deploy services 
 
 # run 
-uvicorn app.main:app --reload 
+uvicorn main:app --reload 
 (stop server: ctrl+c)
 
 # show doc
