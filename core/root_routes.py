@@ -7,7 +7,7 @@ from fastapi.responses import FileResponse
 from core.token import Token, create_access_token
 from core.authentication import authenticate_user
 from config import config
-import core.constants as const
+from core.base_constant import const
 
 
 router = APIRouter(

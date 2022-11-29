@@ -5,7 +5,7 @@ from jose import JWTError, jwt
 from core.hashing import verify_password
 from core.token import TokenData
 from config import config
-import core.constants as const
+from core.base_constant import const
 import importlib
 
 
