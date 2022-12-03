@@ -2,15 +2,18 @@ from sqlmodel import select
 from core.database import Database
 
 from services.game.models.team_model import TeamModel, TeamCreate, TeamRead, TeamUpdate
+from services.blog.models.agent_model import AgentRead
 
 
 class TeamRepo:
 
     def add_team(self,
-                 team: TeamCreate
+                 team: TeamCreate,
+                 current_user: AgentRead
                  ) -> TeamModel:
         session = Database().get_session()
         db_team = TeamModel.from_orm(team)
+        db_team.agent_id = current_user.id
         session.add(db_team)
         session.commit()
         session.refresh(db_team)

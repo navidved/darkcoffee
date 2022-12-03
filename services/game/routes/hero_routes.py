@@ -5,7 +5,6 @@ from services.game.models.hero_model import HeroRead, HeroCreate, HeroReadWithTe
 import services.game.controllers.hero_controller as hero_controller
 from core.authentication import authenticate_user, get_current_active_user
 
-from core.database import Database
 
 
 router = APIRouter(
@@ -18,7 +17,7 @@ router = APIRouter(
              response_model=HeroReadWithTeam,
              status_code=status.HTTP_201_CREATED
              )
-async def add_hero(*, hero: HeroCreate, current_user = Depends(get_current_active_user)):
+async def add_hero(*, hero: HeroCreate):
     return hero_controller.add_hero(hero)
 
 
@@ -40,9 +39,7 @@ async def get_all_heros(
             status_code=status.HTTP_200_OK
             )
 async def get_hero(*, id: int):
-    session = Database().get_session()
-    hero = session.get(HeroModel, id)
-    return hero
+    return hero_controller.get_hero(id)
 
 
 @router.patch("/{hero_id}",

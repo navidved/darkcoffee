@@ -14,8 +14,8 @@ def update_team(id: int, team: TeamUpdate) -> TeamRead:
     return updated_team
 
 
-def add_team(team: TeamCreate) -> TeamRead:
-    return TeamRepo().add_team(team)
+def add_team(team: TeamCreate, current_user) -> TeamRead:
+    return TeamRepo().add_team(team, current_user)
 
 
 def get_team(id: int) -> TeamRead:

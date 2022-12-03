@@ -35,3 +35,10 @@ class HeroUpdate(SQLModel):
 class HeroReadWithTeam(HeroRead):
     from services.game.models.team_model import TeamRead
     team: Optional[TeamRead] = None
+
+
+class HeroReadWithTeam(HeroRead):
+    from services.game.models.team_model import TeamReadWithAgent
+    team: Optional[TeamReadWithAgent] = None
+
+    

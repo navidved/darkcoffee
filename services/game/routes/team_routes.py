@@ -1,8 +1,9 @@
 from typing import List
-from fastapi import APIRouter, status, Query
+from fastapi import APIRouter, status, Query, Depends
 
 from services.game.models.team_model import TeamCreate, TeamRead, TeamReadWithHeroes, TeamUpdate
 import services.game.controllers.team_controller as team_controller
+from core.authentication import authenticate_user, get_current_active_user
 
 
 router = APIRouter(
@@ -15,8 +16,8 @@ router = APIRouter(
              response_model=TeamReadWithHeroes,
              status_code=status.HTTP_201_CREATED
              )
-def add_team(*, team: TeamCreate):
-    return team_controller.add_team(team)
+def add_team(*, team: TeamCreate, current_user = Depends(get_current_active_user)):
+    return team_controller.add_team(team, current_user)
 
 
 @router.get("/",

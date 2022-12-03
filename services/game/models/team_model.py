@@ -3,6 +3,7 @@ from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
     from .hero_model import HeroModel
+    from services.blog.models.agent_model import AgentModel
 
 
 class TeamBase(SQLModel):
@@ -14,6 +15,8 @@ class TeamModel(TeamBase, table=True):
     __tablename__ = "team"
     id: Optional[int] = Field(default=None, primary_key=True)
     heroes: List["HeroModel"] = Relationship(back_populates="team")
+    agent_id: Optional[int] = Field(default=None, foreign_key="agent.id")
+    agent: Optional["AgentModel"] = Relationship()
 
 
 class TeamCreate(TeamBase):
@@ -22,6 +25,10 @@ class TeamCreate(TeamBase):
 
 class TeamRead(TeamBase):
     id: int
+
+class TeamReadWithAgent(TeamRead):
+    from services.blog.models.agent_model import AgentRead
+    agent: Optional[AgentRead] = None
 
 
 class TeamUpdate(SQLModel):
@@ -32,3 +39,5 @@ class TeamUpdate(SQLModel):
 class TeamReadWithHeroes(TeamRead):
     from services.game.models.hero_model import HeroRead
     heroes: List[HeroRead] = []
+
+
