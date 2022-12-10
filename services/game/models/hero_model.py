@@ -14,7 +14,7 @@ class HeroBase(SQLModel):
 class HeroModel(HeroBase, table=True):
     __tablename__ = "hero"
     id: Optional[int] = Field(default=None, primary_key=True)
-    team: Optional["TeamModel"] = Relationship(back_populates="heroes")
+    team: Optional["TeamModel"] = Relationship(back_populates="heroes", sa_relationship_kwargs={"lazy": "joined"})
 
 
 class HeroCreate(HeroBase):

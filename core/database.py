@@ -10,7 +10,7 @@ class Database(metaclass=SingletonClass):
         sqlite_file_full_path = path.join(path.abspath(
             getcwd()), config.SQLITE_DATABASE_PATH, config.SQLITE_DATABASE_NAME)
         sqlite_url = f"sqlite:///{sqlite_file_full_path}"
-        self.engine = create_engine(sqlite_url)
+        self.engine = create_engine(sqlite_url, echo=config.DATABASE_ECHO)
 
     def migrate(self) -> None:
         SQLModel.metadata.create_all(self.engine)

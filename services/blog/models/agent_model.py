@@ -17,7 +17,7 @@ class AgentModel(AgentBase, table=True):
     __tablename__ = "agent"
     id: Optional[int] = Field(default=None, primary_key=True)
     hashed_password: Optional[str]
-    posts: List["PostModel"] = Relationship(back_populates="author")
+    posts: List["PostModel"] = Relationship(back_populates="author", sa_relationship_kwargs={"lazy": "joined"})
 
 
 class AgentCreate(AgentBase):

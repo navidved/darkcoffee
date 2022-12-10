@@ -14,9 +14,9 @@ class TeamBase(SQLModel):
 class TeamModel(TeamBase, table=True):
     __tablename__ = "team"
     id: Optional[int] = Field(default=None, primary_key=True)
-    heroes: List["HeroModel"] = Relationship(back_populates="team")
+    heroes: List["HeroModel"] = Relationship(back_populates="team", sa_relationship_kwargs={"lazy": "joined"})
     agent_id: Optional[int] = Field(default=None, foreign_key="agent.id")
-    agent: Optional["AgentModel"] = Relationship()
+    agent: Optional["AgentModel"] = Relationship(sa_relationship_kwargs={"lazy": "joined"})
 
 
 class TeamCreate(TeamBase):

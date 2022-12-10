@@ -7,4 +7,6 @@ class Config(BaseConfig):
     AUTH_USER_METHOD = "get_agent_by_username"
     AUTH_USER_MODULE = "services.blog.repository.agent_repo"
 
+    DATABASE_ECHO = True
+
 config=Config()

@@ -13,7 +13,7 @@ class PostModel(PostBase, table=True):
     __tablename__ = "post"
     id: Optional[int] = Field(default=None, primary_key=True)
     author_id: Optional[int] = Field(default=None, foreign_key="agent.id")
-    author: Optional["AgentModel"] = Relationship(back_populates="posts")
+    author: Optional["AgentModel"] = Relationship(back_populates="posts", sa_relationship_kwargs={"lazy": "joined"})
 
 
 class PostCreate(PostBase):
@@ -22,7 +22,7 @@ class PostCreate(PostBase):
 
 class PostRead(PostBase):
     id: int
-    author: Optional["AgentModel"] = Relationship(back_populates="posts")
+    author: Optional["AgentModel"] = Relationship(back_populates="posts", sa_relationship_kwargs={"lazy": "joined"})
 
 
 class PostReadWithAgent(PostRead):

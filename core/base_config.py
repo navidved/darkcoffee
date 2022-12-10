@@ -9,6 +9,7 @@ class BaseConfig(BaseSettings):
 
     # Database
     # SQLLite
+    DATABASE_ECHO: bool = False
     SQLITE_DATABASE_NAME: str = "db.sqlite"
     SQLITE_DATABASE_PATH: str = "ds"
 
